@@ -7,13 +7,11 @@ pacman-key --init
 pacman -Syy --noconfirm archlinux-keyring
 pacman -Syu --noconfirm \
 	base-devel \
-	ccache     \
-	clang      \
-	cmake      \
-	curl       \
-	git        \
-	ninja      \
-	sccache    \
+	cmake \
+	curl \
+	gcc \
+	git \
+	ninja \
 	wget
 echo "------------------------------------------------------------"
 
@@ -36,7 +34,8 @@ mkdir -p /usr/local/bin
 cp /usr/bin/makepkg /usr/local/bin
 echo "------------------------------------------------------------"
 
-git clone https://aur.archlinux.org/"$1".git
+git clone --depth 1 https://github.com/archlinuxarm/PKGBUILDs.git
+cd PKGBUILDs
 
 cd "$1"
 
@@ -51,7 +50,7 @@ sed -i -e 's|-g1|-g0|' PKGBUILD
 makepkg -s --noconfirm
 
 mkdir ../artifacts
-rm -f *debug* || true
-mv *.pkg.tar* ../artifacts
+rm -f ./*debug* || true
+mv ./*.pkg.tar* ../artifacts
 
 ls -lh ../artifacts

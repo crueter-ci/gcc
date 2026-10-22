@@ -12,16 +12,11 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - arch: x86_64
-            runs-on: ubuntu-24.04
           - arch: aarch64
             runs-on: ubuntu-24.04-arm
 
         package:
-          - python310
-          - python311
-          - python312
-          - python313
+          - core/gcc
 
     name: "${{ matrix.package }} (${{ matrix.os.arch }})"
 
