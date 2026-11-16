@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+# shellcheck disable=SC2016
+
 # prep - credit Samueru
 
 echo "Installing basic packages..."
@@ -23,8 +25,11 @@ sed -i \
 	-e 's|-Wp,-D_FORTIFY_SOURCE=3||' \
 	-e 's|-fstack-clash-protection||' \
 	-e 's|MAKEFLAGS=.*|MAKEFLAGS="-j$(nproc)"|' \
-	-e 's|!ccache|sccache|' \
-	-e 's|#MAKEFLAGS|MAKEFLAGS|' /etc/makepkg.conf
+	-e 's|#MAKEFLAGS|MAKEFLAGS|' \
+    -e '$a\CC="sccache gcc"' \
+    -e '$a\CXX="sccache g++"' \
+    /etc/makepkg.conf
+
 cat /etc/makepkg.conf
 echo "------------------------------------------------------------"
 
