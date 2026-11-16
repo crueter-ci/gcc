@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     strategy:
-      # Fail-fast: false ensures one failing build doesn't stop the others
       fail-fast: false
       matrix:
         os:
@@ -23,20 +22,15 @@ jobs:
     container:
       image: ghcr.io/pkgforge-dev/archlinux:latest
     env:
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
-      CCACHE_COMPILERCHECK: content
-      CCACHE_SLOPPINESS: time_macros
+      SCCACHE_GHA_ENABLED: true
 
     runs-on: ${{ matrix.os.runs-on }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup ccache
-        uses: crueter/ccache-action@master
-        with:
-          key: ${{ matrix.os.arch }}-${{ matrix.package }}
-          install: binary
+        uses: Mozilla-Actions/sccache-action@v0.0.11
 
       - name: build
         run: |
