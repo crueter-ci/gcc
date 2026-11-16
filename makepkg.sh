@@ -23,7 +23,7 @@ sed -i \
 	-e 's|-Wp,-D_FORTIFY_SOURCE=3||' \
 	-e 's|-fstack-clash-protection||' \
 	-e 's|MAKEFLAGS=.*|MAKEFLAGS="-j$(nproc)"|' \
-	-e 's|!ccache|ccache|' \
+	-e 's|!ccache|sccache|' \
 	-e 's|#MAKEFLAGS|MAKEFLAGS|' /etc/makepkg.conf
 cat /etc/makepkg.conf
 echo "------------------------------------------------------------"
